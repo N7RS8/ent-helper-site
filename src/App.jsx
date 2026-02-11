@@ -1,31 +1,22 @@
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
-import Search from "./pages/Search";
-import Ai from "./pages/AI";
+import AI from "./pages/AI";
 import Contacts from "./pages/Contacts";
-import NotFound from "./pages/NotFound";
 
-import "./App.css";
-
-export default function App() {
-  const [page, setPage] = useState("home");
-
+function App() {
   return (
-    <div className="app">
-      <Navbar page={page} setPage={setPage} />
+    <BrowserRouter>
+      <Navbar />
 
-      <main className="container">
-        {page === "home" && <Home setPage={setPage} />}
-        {page === "search" && <Search />}
-        {page === "ai" && <Ai />}
-        {page === "contacts" && <Contacts />}
-        {!["home", "search", "ai", "contacts"].includes(page) && <NotFound setPage={setPage} />}
-      </main>
-
-      <Footer />
-    </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/ai" element={<AI />} />
+        <Route path="/contacts" element={<Contacts />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
+
+export default App;
