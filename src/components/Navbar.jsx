@@ -3,10 +3,10 @@ import "./navbar.css";
 
 export default function Navbar() {
   return (
-    <nav className="navbar">
-      <Link to="/">Басты бет</Link>
-      <Link to="/ai">AI</Link>
-      <Link to="/contacts">Contacts</Link>
+    <nav className="nav">
+      <Link to="/" className="nav-item">Басты бет</Link>
+      <Link to="/ai" className="nav-item">AI көмекші</Link>
+      <Link to="/contacts" className="nav-item">Байланыс</Link>
     </nav>
   );
 }
