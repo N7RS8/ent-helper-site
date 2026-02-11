@@ -1,0 +1,50 @@
+.chatPage{
+  padding:40px;
+}
+
+.chatBox{
+  margin-top:20px;
+  background:#f4f7fb;
+  height:400px;
+  overflow:auto;
+  padding:20px;
+  border-radius:20px;
+}
+
+.msg{
+  padding:12px 16px;
+  margin:10px 0;
+  border-radius:15px;
+  max-width:60%;
+}
+
+.bot{
+  background:#e3f2fd;
+}
+
+.user{
+  background:#1976d2;
+  color:white;
+  margin-left:auto;
+}
+
+.chatInput{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.chatInput input{
+  flex:1;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #ddd;
+}
+
+.chatInput button{
+  padding:12px 20px;
+  background:#1976d2;
+  color:white;
+  border:none;
+  border-radius:12px;
+}

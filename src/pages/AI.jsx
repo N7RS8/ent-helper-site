@@ -1,33 +1,47 @@
 import { useState } from "react";
+import "./ai.css";
 
 export default function AI(){
-  const [q,setQ]=useState("");
-  const [ans,setAns]=useState("");
 
-  const ask=async()=>{
-    const r = await fetch("/api/chat",{
-      method:"POST",
-      headers:{ "Content-Type":"application/json"},
-      body:JSON.stringify({message:q})
-    });
-    const d = await r.json();
-    setAns(d.answer);
+  const [messages,setMessages]=useState([
+    {text:"Сәлем! Мен ҰБТ бойынша көмекшімін.",bot:true}
+  ]);
+  const [input,setInput]=useState("");
+
+  const send=()=>{
+    if(!input) return;
+
+    const newMsg={text:input,bot:false};
+
+    setMessages([...messages,newMsg,
+      {text:"Жақсы! Маған нақты пән жаз: математика, тарих, комбинация.",bot:true}
+    ]);
+
+    setInput("");
   };
 
   return(
-    <div style={{padding:20}}>
+    <div className="chatPage">
+
       <h2>AI көмекші</h2>
 
-      <input
-        value={q}
-        onChange={e=>setQ(e.target.value)}
-        style={{padding:10,width:"60%"}}
-      />
-      <button onClick={ask} style={{padding:10,marginLeft:10}}>
-        сұрау
-      </button>
+      <div className="chatBox">
+        {messages.map((m,i)=>(
+          <div key={i} className={m.bot?"msg bot":"msg user"}>
+            {m.text}
+          </div>
+        ))}
+      </div>
 
-      <p style={{marginTop:20}}>{ans}</p>
+      <div className="chatInput">
+        <input
+          value={input}
+          onChange={e=>setInput(e.target.value)}
+          placeholder="Сұрақ жаз..."
+        />
+        <button onClick={send}>Жіберу</button>
+      </div>
+
     </div>
-  );
+  )
 }
