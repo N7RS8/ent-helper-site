@@ -1,8 +1,8 @@
-export default function Search(){
-  return(
-    <div className="container">
+export default function Search() {
+  return (
+    <div className="card">
       <h2>Іздеу</h2>
-      <p>Пән комбинациясы бойынша мамандық табу бөлімі.</p>
+      <input className="input" placeholder="Мамандық немесе пән..." />
     </div>
   );
 }

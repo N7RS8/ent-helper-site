@@ -1,8 +1,8 @@
-export default function Contacts(){
-  return(
-    <div className="container">
+export default function Contacts() {
+  return (
+    <div className="card">
       <h2>Байланыс</h2>
-      <p>Telegram бот және байланыс мәліметтері.</p>
+      <p>Telegram: t.me/enthelper</p>
     </div>
   );
 }
