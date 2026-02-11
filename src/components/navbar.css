@@ -1,16 +1,16 @@
 .nav{
   display:flex;
-  gap:20px;
+  gap:25px;
   padding:15px;
-  background:#1f2937;
+  background:#111827;
 }
 
-.nav-item{
+.nav a{
   color:white;
   text-decoration:none;
-  font-weight:600;
+  font-weight:bold;
 }
 
-.nav-item:hover{
+.nav a:hover{
   color:#60a5fa;
 }
