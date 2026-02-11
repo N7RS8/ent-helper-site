@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-
-const API = "https://ent-helper-site-2.onrender.com/api/chat";
+import { useState } from "react";
 
 export default function AI() {
   const [message, setMessage] = useState("");
@@ -8,25 +6,21 @@ export default function AI() {
   const [loading, setLoading] = useState(false);
 
   const sendMessage = async () => {
-    if (!message.trim()) return;
+    if (!message) return;
 
     setLoading(true);
 
-    try {
-      const res = await fetch(API, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message })
-      });
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message }),
+    });
 
-      const data = await res.json();
-      setAnswer(data.reply);
-    } catch (err) {
-      setAnswer("Қате шықты. Қайта көріңіз.");
-    }
+    const data = await res.json();
 
+    setAnswer(data.answer);
     setLoading(false);
   };
 
@@ -41,10 +35,7 @@ export default function AI() {
         placeholder="Сұрақ жазыңыз..."
       />
 
-      <button
-        style={{ padding: 10, marginLeft: 10 }}
-        onClick={sendMessage}
-      >
+      <button style={{ padding: 10, marginLeft: 10 }} onClick={sendMessage}>
         Жіберу
       </button>
 
