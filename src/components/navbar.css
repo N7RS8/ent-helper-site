@@ -1,5 +1,5 @@
 .header{
-  background: linear-gradient(135deg,#2d8cff,#00b2ff);
+  background: linear-gradient(135deg,#2b7cff,#00b7ff);
   padding:20px;
   color:white;
 }
@@ -14,42 +14,36 @@
 
 .brand{
   display:flex;
-  gap:12px;
   align-items:center;
+  gap:12px;
 }
 
 .logo{
   width:50px;
   height:50px;
-  background:#ffffff33;
+  background:rgba(255,255,255,0.2);
+  border-radius:12px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:14px;
   font-weight:bold;
 }
 
-.title{
-  font-size:20px;
-  font-weight:600;
+.nav{
+  display:flex;
+  gap:14px;
 }
 
-.subtitle{
-  font-size:13px;
-  opacity:.9;
-}
-
-.menu a{
-  margin-left:14px;
+.navBtn{
   padding:10px 18px;
   border-radius:20px;
-  border:1px solid #ffffff55;
-  color:white;
+  border:1px solid rgba(255,255,255,0.5);
   text-decoration:none;
+  color:white;
   transition:.2s;
 }
 
-.menu a:hover{
+.navBtn:hover{
   background:white;
-  color:#2d8cff;
+  color:#2b7cff;
 }

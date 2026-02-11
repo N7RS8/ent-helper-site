@@ -1,26 +1,23 @@
-import { Link } from "react-router-dom";
-import "./navbar.css";
+import { NavLink } from "react-router-dom";
 
-export default function Navbar() {
-  return (
+export default function Navbar(){
+  return(
     <header className="header">
-      <div className="headerInner">
-
+      <div className="container">
         <div className="brand">
           <div className="logo">UTO</div>
           <div>
-            <div className="title">ҰБТ Көмекші</div>
-            <div className="subtitle">ENT Helper</div>
+            <div style={{fontWeight:700}}>ҰБТ Көмекші</div>
+            <div style={{opacity:.8,fontSize:13}}>ENT Helper</div>
           </div>
         </div>
 
-        <nav className="menu">
-          <Link to="/">Басты бет</Link>
-          <Link to="/search">Іздеу</Link>
-          <Link to="/ai">AI көмекші</Link>
-          <Link to="/contacts">Байланыс</Link>
+        <nav className="nav">
+          <NavLink to="/">Басты бет</NavLink>
+          <NavLink to="/search">Іздеу</NavLink>
+          <NavLink to="/ai">AI көмекші</NavLink>
+          <NavLink to="/contacts">Байланыс</NavLink>
         </nav>
-
       </div>
     </header>
   );
