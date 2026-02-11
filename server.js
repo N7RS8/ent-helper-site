@@ -2,43 +2,29 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import OpenAI from "openai";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 
-// Frontend доменің (Static site) осы жақтан ашылуы үшін
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://ent-helper-site-1.onrender.com", // сенің сайт
-];
-
-app.use(
-  cors({
-    origin: function (origin, cb) {
-      // origin жоқ болса (мысалы curl/postman) рұқсат
-      if (!origin) return cb(null, true);
-      if (allowedOrigins.includes(origin)) return cb(null, true);
-      return cb(new Error("CORS blocked for origin: " + origin));
-    },
-  })
-);
-
+// ========== base ==========
+app.use(cors());
 app.use(express.json());
 
+// ========== OpenAI ==========
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-app.get("/", (req, res) => {
-  res.send("Backend жұмыс істеп тұр ✅");
+// ========== API ==========
+app.get("/api/health", (req, res) => {
+  res.json({ ok: true });
 });
 
 app.post("/api/chat", async (req, res) => {
   try {
     const message = (req.body?.message || "").toString().trim();
-
-    if (!message) {
-      return res.json({ reply: "Сұрақ жазыңыз." });
-    }
+    if (!message) return res.json({ reply: "Сұрақ жазыңыз." });
 
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
@@ -50,22 +36,27 @@ app.post("/api/chat", async (req, res) => {
         },
         { role: "user", content: message },
       ],
-      temperature: 0.6,
     });
 
-    const reply =
-      completion.choices?.[0]?.message?.content?.trim() || "Жауап табылмады.";
-
+    const reply = completion.choices?.[0]?.message?.content || "Жауап шықпады.";
     res.json({ reply });
   } catch (e) {
     console.error(e);
-    res.status(500).json({
-      reply: "Серверде қате болды. API key және интернетті тексер.",
-    });
+    res.status(500).json({ reply: "Сервер қатесі болды." });
   }
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log("API server:", `http://localhost:${PORT}`);
+// ========== serve frontend (Vite dist) ==========
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// IMPORTANT: Vite build output = dist
+app.use(express.static(path.join(__dirname, "dist")));
+
+// SPA fallback (чтобы не был белый экран на роутинге)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Server running on", PORT));
