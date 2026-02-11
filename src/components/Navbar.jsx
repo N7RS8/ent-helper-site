@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import "./navbar.css";
 
 export default function Navbar() {
   return (
-    <div style={{ padding: 20, display: "flex", gap: 20 }}>
+    <nav className="navbar">
       <Link to="/">Басты бет</Link>
-      <Link to="/ai">AI баланс</Link>
-      <Link to="/contacts">Контакты</Link>
-    </div>
+      <Link to="/ai">AI</Link>
+      <Link to="/contacts">Contacts</Link>
+    </nav>
   );
 }

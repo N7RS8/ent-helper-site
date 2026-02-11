@@ -1,0 +1,43 @@
+.nav{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+  background: #0f1115;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.nav__logo{
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nav__links{
+  display: flex;
+  gap: 10px;
+}
+
+.nav__btn{
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: 0.15s;
+}
+
+.nav__btn:hover{
+  background: rgba(255,255,255,0.12);
+}
+
+.nav__btn.active{
+  border-color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.18);
+}

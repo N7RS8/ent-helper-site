@@ -1,13 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import AI from "./pages/AI";
 import Contacts from "./pages/Contacts";
 
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
+    <>
       <Navbar />
 
       <Routes>
@@ -15,8 +15,6 @@ function App() {
         <Route path="/ai" element={<AI />} />
         <Route path="/contacts" element={<Contacts />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
-
-export default App;
