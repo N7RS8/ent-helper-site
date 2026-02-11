@@ -1,28 +1,26 @@
 import { useState } from "react";
 
-export default function AI(){
-  const [msg,setMsg]=useState("");
-  const [chat,setChat]=useState([]);
+export default function AI() {
+  const [q, setQ] = useState("");
+  const [ans, setAns] = useState("");
 
-  const send=()=>{
-    if(!msg) return;
-    setChat([...chat,{user:msg,bot:"Жақсы! Сұрағың қабылданды."}]);
-    setMsg("");
-  };
+  function ask() {
+    setAns("Жауап: дайындықты күн сайын 2-3 сағаттан бастаңыз.");
+  }
 
-  return(
-    <div className="container">
-      <h2>AI көмекші</h2>
+  return (
+    <div>
+      <h1>AI көмекші</h1>
 
-      {chat.map((c,i)=>(
-        <div key={i}>
-          <div>Сен: {c.user}</div>
-          <div>AI: {c.bot}</div>
-        </div>
-      ))}
+      <input
+        value={q}
+        onChange={(e)=>setQ(e.target.value)}
+        placeholder="Сұрақ жазыңыз"
+      />
 
-      <input value={msg} onChange={e=>setMsg(e.target.value)} />
-      <button onClick={send}>Жіберу</button>
+      <button onClick={ask}>Сұрау</button>
+
+      <p>{ans}</p>
     </div>
   );
 }

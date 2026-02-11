@@ -4,9 +4,10 @@ import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 import Search from "./pages/Search";
+import AI from "./pages/AI";
 import Contacts from "./pages/Contacts";
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Navbar />
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/ai" element={<AI />} />
           <Route path="/contacts" element={<Contacts />} />
         </Routes>
       </div>
@@ -23,5 +25,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;
