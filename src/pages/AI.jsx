@@ -1,59 +1,61 @@
-import express from "express";
-import cors from "cors";
-import "dotenv/config";
-import OpenAI from "openai";
+import React, { useState } from "react";
 
-const app = express();
+const API = "https://ent-helper-site-2.onrender.com/api/chat";
 
-// ✅ CORS: сайт телефон/ноуттан ашылсын
-app.use(cors({ origin: "*" }));
-app.use(express.json());
+export default function AI() {
+  const [message, setMessage] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [loading, setLoading] = useState(false);
 
-// ✅ OpenAI клиенті
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,});
+  const sendMessage = async () => {
+    if (!message.trim()) return;
 
-// ✅ Тексеру үшін
-app.get("/", (req, res) => {
-  res.send("Backend жұмыс істеп тұр ✅");
-});
+    setLoading(true);
 
-// ✅ Чат API
-app.post("/api/chat", async (req, res) => {
-  try {
-    const message = (req.body?.message || "").toString().trim();
+    try {
+      const res = await fetch(API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
+      });
 
-    if (!message) {
-      return res.json({ reply: "Сұрақ жазыңыз." });
+      const data = await res.json();
+      setAnswer(data.reply);
+    } catch (err) {
+      setAnswer("Қате шықты. Қайта көріңіз.");
     }
 
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content:
-            "Сен студентке көмектесетін қазақша ассистентсің. Жауапты қысқа, түсінікті, нақты бер.",
-        },
-        { role: "user", content: message },
-      ],
-      temperature: 0.7,
-    });
+    setLoading(false);
+  };
 
-    const reply =
-      completion.choices?.[0]?.message?.content?.trim() || "Жауап табылмады.";
+  return (
+    <div style={{ padding: 20 }}>
+      <h2>AI Көмекші</h2>
 
-    res.json({ reply });
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({
-      reply: "Серверде қате шықты. API кілтін және интернетті тексеріңіз.",
-    });
-  }
-});
+      <input
+        style={{ padding: 10, width: "70%" }}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Сұрақ жазыңыз..."
+      />
 
-// ✅ Render үшін міндетті: PORT
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log("Server started on " + PORT);
-});
+      <button
+        style={{ padding: 10, marginLeft: 10 }}
+        onClick={sendMessage}
+      >
+        Жіберу
+      </button>
+
+      {loading && <p>Жауап күтілуде...</p>}
+
+      {answer && (
+        <div style={{ marginTop: 20 }}>
+          <b>Жауап:</b>
+          <p>{answer}</p>
+        </div>
+      )}
+    </div>
+  );
+}
